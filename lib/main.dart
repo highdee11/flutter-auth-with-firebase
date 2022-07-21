@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ourpass_auth/views/auth/auth-token.dart';
 import 'package:ourpass_auth/views/auth/signup.dart';
 
 void main() {

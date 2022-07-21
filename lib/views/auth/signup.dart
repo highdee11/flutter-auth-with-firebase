@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:ourpass_auth/utils/services/ui_service.dart';
+import 'package:ourpass_auth/utils/services/validation-service.dart';
 import 'package:ourpass_auth/widgets/auth/input_box.dart';
-import 'package:ourpass_auth/widgets/auth/password_box.dart';
+import 'package:ourpass_auth/widgets/forms/block_button.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({Key? key}) : super(key: key);
@@ -12,112 +14,61 @@ class AuthScreen extends StatefulWidget {
 class _AuthScreenState extends State<AuthScreen> {
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.white,
-          height: size.height * 1,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          constraints: BoxConstraints(
-              minHeight:100
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                padding: EdgeInsets.all(20),
-                margin: EdgeInsets.only(top: 20),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 20),
-                      Text('Login to your account',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600
-                          )),
-                      const SizedBox(height: 20),
-                      const BlockInputBox(label: '', hintText: 'Email'),
-                      const SizedBox(height: 20),
-                      const FilledPasswordInput(label: '', hintText: 'Password'),
+      body: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints){
+          return SingleChildScrollView(
+            child: Container(
+              color: Colors.white,
+              height: constraints.maxHeight,
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: rSpaceMax(constraints.maxHeight * 0.1, 80)),
+                  const Text(
+                      'Login to your account',
+                      style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500)
+                  ),
+                  const SizedBox(height: 20),
+                  CustomInputField(
+                      label: '',
+                      hintText: 'Email',
+                      autoFocus: true,
+                      validator: ValidationService.isValidEmail
+                  ),
+                  const SizedBox(height: 20),
+                  CustomInputField(
+                      label: '',
+                      hintText: 'Password',
+                      isPassword: true,
+                      validator: ValidationService.isValidPassword
+                  ),
+                  const SizedBox(height: 40),
+                  BlockButton(
+                    label: 'Sign Up',
+                    onTap: (){},
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text('Didn’t have an account?', style: TextStyle(color: Color(0xff76777D), fontSize: 15)),
+                      InkWell(
+                        child:Text(' Sign up', style: TextStyle(color: Color(0xff1e329d), fontSize: 16 )),
+                      ),
                     ],
                   ),
-                ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    const RideeatBlockButton(label: 'Sign Up'),
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Didn’t have an account?', style: TextStyle(color: Color(0xff76777D), fontSize: 17)),
-                        InkWell(
-                          child:Text('Sign up', style: TextStyle(color: Color(0xff1e329d), fontSize: 17, )),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }
 }
 
 
-class RideeatBlockButton extends StatelessWidget {
-  final String label;
-  final Function()? onTap;
-  final bool disabled;
 
-  const RideeatBlockButton({
-    Key? key,
-    required this.label,
-    this.onTap,
-    this.disabled = false
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return Container(
-      height: 70,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-        color: disabled ? const Color(0xffFFF1E5) : const Color(0xff1e329d),
-        borderRadius: BorderRadius.circular(10),
-          boxShadow:[
-            BoxShadow(
-              color:  Color(0xffe9e9e9),
-              blurRadius: 25.0, // soften the shadow
-              spreadRadius: 1.0, //extend the shadow
-              offset: Offset(
-                1.0, // Move to right 10  horizontally
-                1.0, // Move to bottom 10 Vertically
-              ),
-            )
-          ]
-      ),
-      child: TextButton(
-        onPressed: onTap,
-        child: Text( label,
-          style: TextStyle(
-              color: Colors.white,
-              fontSize: 15,
-              fontWeight: FontWeight.w500
-          ),
-        ),
-      ),
-    );
-  }
-}
 

@@ -1,13 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ourpass_auth/utils/services/ui_service.dart';
 
-class BlockInputBox extends StatelessWidget {
+class CustomInputField extends StatefulWidget {
   final String label;
   final String hintText;
-  const BlockInputBox({Key? key,
+  final bool isPassword;
+  final bool autoFocus;
+  final String? Function(String?)? validator;
+
+  CustomInputField({Key? key,
     required this.label,
-    required this.hintText
+    required this.hintText,
+    this.isPassword = false,
+    this.autoFocus = false,
+    this.validator
   }) : super(key: key);
+
+  @override
+  State<CustomInputField> createState() => _CustomInputFieldState();
+}
+
+class _CustomInputFieldState extends State<CustomInputField> {
+  bool _obscureText = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    if(widget.isPassword) _obscureText = true;
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -15,27 +38,14 @@ class BlockInputBox extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          decoration: BoxDecoration(
-              boxShadow:[
-                BoxShadow(
-                  color: Color(0xffe9e9e9),
-                  blurRadius: 25.0, // soften the shadow
-                  spreadRadius: 1.0, //extend the shadow
-                  offset: Offset(
-                    1.0, // Move to right 10  horizontally
-                    1.0, // Move to bottom 10 Vertically
-                  ),
-                )
-              ]
-          ),
+          decoration: UIService.boxDecor,
           child: TextFormField(
-
-            decoration:  InputDecoration(
-
-                border:   OutlineInputBorder(),
-                hintText: hintText,
+            decoration: InputDecoration(
+                border:   const OutlineInputBorder(),
+                hintText: widget.hintText,
                 hintStyle: const TextStyle(
-                  fontSize: 17,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300,
                   color: Color(0xff414141),
                 ),
                 fillColor: Colors.white,
@@ -53,11 +63,29 @@ class BlockInputBox extends StatelessWidget {
                       color: Colors.blue,
                       width: 1.0
                   ),
+                ),
+                suffixIcon: !widget.isPassword ? null :  IconButton(
+                  icon: Icon(
+                    _obscureText? Icons.visibility : Icons.visibility_off,
+                    color: !_obscureText ? UIService.primaryColor : const Color(0xffB8BCC6),
+                  ),
+                  onPressed: _toggle,
                 )
             ),
+            validator: widget.validator,
+            obscureText: _obscureText,
+            autofocus: widget.autoFocus,
           ),
         ),
       ],
     );
+  }
+
+
+  // Toggles the password show status
+  void _toggle() {
+    setState(() {
+      _obscureText = !_obscureText;
+    });
   }
 }
