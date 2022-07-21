@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ourpass_auth/utils/services/ui_service.dart';
+import 'package:ourpass_auth/utils/services/ui-service.dart';
 import 'package:ourpass_auth/utils/services/validation-service.dart';
 import 'package:ourpass_auth/widgets/auth/input_box.dart';
 import 'package:ourpass_auth/widgets/forms/block_button.dart';

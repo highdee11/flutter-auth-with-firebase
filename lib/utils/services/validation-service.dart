@@ -34,7 +34,7 @@ class ValidationService{
     String? result = isValidInput(data);
     if(result != null) return result;
 
-    final RegExp charRegExp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    final RegExp charRegExp = RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~.]).{8,}$');
     if(!charRegExp.hasMatch(data!)) return 'Password should contain at least : \nOne upper case\nOne lower case\nOne digit and one special character.';
 
     return null;

@@ -1,4 +1,4 @@
-package com.ourpassauth.ourpass_auth
+package com.ourpass.auth
 
 import io.flutter.embedding.android.FlutterActivity
 

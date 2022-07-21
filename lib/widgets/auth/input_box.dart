@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:ourpass_auth/utils/services/ui_service.dart';
+import 'package:ourpass_auth/utils/services/ui-service.dart';
 
 class CustomInputField extends StatefulWidget {
   final String label;
   final String hintText;
   final bool isPassword;
   final bool autoFocus;
+  final TextEditingController? controller;
   final String? Function(String?)? validator;
 
   CustomInputField({Key? key,
@@ -14,7 +15,8 @@ class CustomInputField extends StatefulWidget {
     required this.hintText,
     this.isPassword = false,
     this.autoFocus = false,
-    this.validator
+    this.validator,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -75,6 +77,7 @@ class _CustomInputFieldState extends State<CustomInputField> {
             validator: widget.validator,
             obscureText: _obscureText,
             autofocus: widget.autoFocus,
+            controller: widget.controller,
           ),
         ),
       ],

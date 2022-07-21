@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:ourpass_auth/utils/services/ui_service.dart';
+import 'package:ourpass_auth/utils/services/ui-service.dart';
 
 class BlockButton extends StatelessWidget {
   final String label;
+  final bool isLoading;
   final Function()? onTap;
 
   const BlockButton({
     Key? key,
     required this.label,
-    this.onTap
+    this.onTap,
+    this.isLoading = false,
   }) : super(key: key);
 
   @override
@@ -27,7 +29,9 @@ class BlockButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
-          child: Text(
+          child: isLoading ? CircularProgressIndicator(
+            color: Colors.white,
+          ) : Text(
             label,
             style: const TextStyle(color: Colors.white, fontSize: 14),
           )

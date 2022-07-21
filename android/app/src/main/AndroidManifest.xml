@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.ourpassauth.ourpass_auth">
+    package="com.ourpass.auth">
    <application
         android:label="ourpass_auth"
         android:name="${applicationName}"
